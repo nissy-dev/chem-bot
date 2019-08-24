@@ -1,2 +1,3 @@
-# smiles-bot
-SMILES bot for slack
+# chem-bot
+
+Slack bot for chemist
