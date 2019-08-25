@@ -1,0 +1,9 @@
+name: chem-bot
+channels:
+  - conda-forge
+dependencies:
+- python=3.6.9
+- rdkit=2019.03.4
+- pip:
+  - python-dotenv==0.10.3
+  - slackbot==0.5.3

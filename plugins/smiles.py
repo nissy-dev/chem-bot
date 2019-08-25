@@ -2,13 +2,12 @@
 import os
 import re
 from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem import Draw
+from rdkit.Chem import AllChem, Draw
 from slackbot.bot import respond_to
 
 DOWNLOAD_PATH = '/tmp/'
 
-# 半角英数字, 記号, 空白, カンマを OKにした
+# 半角英数字, 記号, 空白を OKにした
 @respond_to('^[a-zA-Z0-9!-/:-@¥[-`{-~\s]*$')
 def smiles_to_png(message):
     smiles_text = message.body['text'].strip()
