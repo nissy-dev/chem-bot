@@ -12,32 +12,27 @@ DOWNLOAD_PATH = '/tmp/'
 def smiles_to_png(message):
     smiles_text = message.body['text'].strip()
 
-    try:
-        smiles = None
-        if re.search(r',' , smiles_text):
-            smiles = smiles_text.split(',')
-        elif re.search(r'\s' , smiles_text):
-            smiles = re.split(r'\s', smiles_text)
-        else:
-            smiles = [smiles_text]
+    smiles = None
+    if re.search(r',' , smiles_text):
+        smiles = smiles_text.split(',')
+    elif re.search(r'\s' , smiles_text):
+        smiles = re.split(r'\s', smiles_text)
+    else:
+        smiles = [smiles_text]
 
-        if smiles is not None:
-            # remove empty string element
-            smiles = [val for val in smiles if val] 
-            for val in smiles:
+    # remove empty string element
+    smiles = [val for val in smiles if val]
+    if len(smiles) > 0:
+        for val in smiles:
+            try:
                 m = Chem.MolFromSmiles(val)
-                # ここを拡張すると色々返せる
                 AllChem.Compute2DCoords(m)
                 name = '{}.png'.format(val)
                 path = DOWNLOAD_PATH + name
                 Draw.MolToFile(m, path)
                 message.channel.upload_file(fname=name, fpath=path)
                 os.remove(path)
-        else:
-            raise ValueError('smiles list is empty!!')
-    except:
-        message.reply(
-            'Sorry, {} is not SMILES or invalid SMILES'.format(smiles_text))
-        pass
-
-
+            except:
+                message.reply('Sorry, {} is invalid SMILES.'.format(val))
+    else:
+        message.reply('There is no input text.')

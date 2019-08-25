@@ -1,4 +1,4 @@
-From continuumio/miniconda3
+FROM continuumio/miniconda3
 
 ADD ./environment.yml .
 RUN conda env create
