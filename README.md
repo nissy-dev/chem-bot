@@ -6,7 +6,7 @@ Slack bot for chemist
 
 | smiles bot                |
 |---------------------------|
-| <img  src="https://raw.githubusercontent.com/nd-02110114/chem-bot/master/gif/smiles.gif" width="400" height="450"/> |
+| <img  src="https://raw.githubusercontent.com/nd-02110114/chem-bot/master/gif/smiles.gif" width="420" height="380"/> |
 
 
 ## Usage (I use conda)
