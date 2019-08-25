@@ -29,26 +29,9 @@ $ python run.py
 $ heroku login
 $ heroku container:login
 $ heroku create heroku-chem-bot
+$ heroku config:set BOT_USER_OAUTH_ACCESS_TOKEN=XXXXXXXXXXXXX
 
-$ heroku container:push worker
-$ heroku container:release worker
+$ git add . && git commit -m "commit"
+$ heroku stack:set container
+$ git push heroku master
 ```
-
-<!-- ### set up heroku
-```
-$ heroku login
-$ heroku 
-
-```
-
-### create `.env` file
-```
-$ heroku run bash
-
-// in server
-$ export "BOT_USER_OAUTH_ACCESS_TOKEN=XXXXXXXXXXXX" > .env
-```
-
-### Run server
-```
-``` -->
