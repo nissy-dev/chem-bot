@@ -2,6 +2,13 @@
 
 Slack bot for chemist
 
+## Feature
+
+| smiles bot                |
+|---------------------------|
+| <img  src="https://raw.githubusercontent.com/nd-02110114/chem-bot/master/gif/smiles.gif" width="400" height="450"/> |
+
+
 ## Usage (I use conda)
 
 ### create the environment
@@ -9,7 +16,6 @@ Slack bot for chemist
 $ git clone git@github.com:nd-02110114/chem-bot.git
 $ conda env create
 $ conda activate chem-bot
-
 ```
 
 ### create `.env` file
