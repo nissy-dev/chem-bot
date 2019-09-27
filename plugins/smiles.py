@@ -32,7 +32,7 @@ def smiles_to_png(message):
                 png_path = DOWNLOAD_PATH + name
                 svg_path = DOWNLOAD_PATH + '{}.svg'.format(val)
                 # Draw.MolToFile(m, svg_path)
-                view = Draw.rdMolDraw2D.MolDraw2DSVG(300,300)
+                view = Draw.rdMolDraw2D.MolDraw2DSVG(500,500)
                 processed_mol = Draw.rdMolDraw2D.PrepareMolForDrawing(m)
                 view.DrawMolecule(processed_mol)
                 view.FinishDrawing()
