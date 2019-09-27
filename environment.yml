@@ -4,6 +4,7 @@ channels:
 dependencies:
 - python=3.6.9
 - rdkit=2019.03.4
+- cairosvg=2.4.2
 - pip:
   - python-dotenv==0.10.3
   - slackbot==0.5.3

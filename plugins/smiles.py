@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
+import cairosvg
 from rdkit import Chem
 from rdkit.Chem import AllChem, Draw
 from slackbot.bot import respond_to
@@ -28,10 +29,20 @@ def smiles_to_png(message):
                 m = Chem.MolFromSmiles(val)
                 AllChem.Compute2DCoords(m)
                 name = '{}.png'.format(val)
-                path = DOWNLOAD_PATH + name
-                Draw.MolToFile(m, path)
-                message.channel.upload_file(fname=name, fpath=path)
-                os.remove(path)
+                png_path = DOWNLOAD_PATH + name
+                svg_path = DOWNLOAD_PATH + '{}.svg'.format(val)
+                # Draw.MolToFile(m, svg_path)
+                view = Draw.rdMolDraw2D.MolDraw2DSVG(300,300)
+                processed_mol = Draw.rdMolDraw2D.PrepareMolForDrawing(m)
+                view.DrawMolecule(processed_mol)
+                view.FinishDrawing()
+                svg = view.GetDrawingText()
+                with open(svg_path, 'w') as f:
+                    f.write(svg)
+                cairosvg.svg2png(url=svg_path, write_to=png_path)
+                message.channel.upload_file(fname=name, fpath=png_path)
+                os.remove(png_path)
+                os.remove(svg_path)
             except:
                 message.reply('Sorry, {} is invalid SMILES.'.format(val))
     else:
