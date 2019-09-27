@@ -44,6 +44,6 @@ def smiles_to_png(message):
                 os.remove(png_path)
                 os.remove(svg_path)
             except:
-                message.reply('Sorry, {} is invalid SMILES.'.format(val))
+                message.reply('Sorry, {} is invalid SMILES or Failed Drawing'.format(val))
     else:
         message.reply('There is no input text.')
