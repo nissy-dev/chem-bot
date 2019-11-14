@@ -37,6 +37,8 @@ def smiles_to_png(message):
 
                 # write png
                 name = '{}.png'.format(val)
+                # replace slash
+                name = name.replace('/', '').replace('\\', '')
                 png_path = DOWNLOAD_PATH + name
                 with open(png_path, 'wb') as f:
                     f.write(drawer.GetDrawingText())
@@ -47,7 +49,7 @@ def smiles_to_png(message):
                 message.reply('Sorry, {} is invalid SMILES or Failed Drawing'.format(val))
 
         # clean tmp dir
-        for p in glob.glob(DOWNLOAD_PATH + '**'):
+        for p in glob.glob(DOWNLOAD_PATH + '*.png'):
             os.remove(p)
     else:
         message.reply('There is no input text.')
