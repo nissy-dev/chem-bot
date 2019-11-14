@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
-import cairosvg
+import glob
 from rdkit import Chem
 from rdkit.Chem import AllChem, Draw
 from slackbot.bot import respond_to
@@ -26,24 +26,28 @@ def smiles_to_png(message):
     if len(smiles) > 0:
         for val in smiles:
             try:
-                m = Chem.MolFromSmiles(val)
-                AllChem.Compute2DCoords(m)
+                mol = Chem.MolFromSmiles(val)
+                if not mol.GetNumConformers():
+                    AllChem.Compute2DCoords(mol)
+
+                # create image
+                drawer = Draw.MolDraw2DCairo(400, 400)
+                drawer.DrawMolecule(mol)
+                drawer.FinishDrawing()
+
+                # write png
                 name = '{}.png'.format(val)
                 png_path = DOWNLOAD_PATH + name
-                svg_path = DOWNLOAD_PATH + '{}.svg'.format(val)
-                # Draw.MolToFile(m, svg_path)
-                view = Draw.rdMolDraw2D.MolDraw2DSVG(400,400)
-                processed_mol = Draw.rdMolDraw2D.PrepareMolForDrawing(m)
-                view.DrawMolecule(processed_mol)
-                view.FinishDrawing()
-                svg = view.GetDrawingText()
-                with open(svg_path, 'w') as f:
-                    f.write(svg)
-                cairosvg.svg2png(url=svg_path, write_to=png_path)
+                with open(png_path, 'wb') as f:
+                    f.write(drawer.GetDrawingText())
+
+                # post png
                 message.channel.upload_file(fname=name, fpath=png_path)
-                os.remove(png_path)
-                os.remove(svg_path)
             except:
                 message.reply('Sorry, {} is invalid SMILES or Failed Drawing'.format(val))
+
+        # clean tmp dir
+        for p in glob.glob(DOWNLOAD_PATH + '**'):
+            os.remove(p)
     else:
         message.reply('There is no input text.')
