@@ -39,6 +39,9 @@ def smiles_to_png(message):
                 name = '{}.png'.format(val)
                 # replace slash
                 name = name.replace('/', '').replace('\\', '')
+                # avoid too long string
+                if len(name) > 250:
+                    name = name[0:250]
                 png_path = DOWNLOAD_PATH + name
                 with open(png_path, 'wb') as f:
                     f.write(drawer.GetDrawingText())
