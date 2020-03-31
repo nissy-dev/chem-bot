@@ -26,6 +26,8 @@ def smiles_to_png(message):
     if len(smiles) > 0:
         for val in smiles:
             try:
+                val = re.sub(r"<|>", "", val)
+                val = re.sub(r"(http).*(\|)", "", val)
                 mol = Chem.MolFromSmiles(val)
                 if not mol.GetNumConformers():
                     AllChem.Compute2DCoords(mol)
